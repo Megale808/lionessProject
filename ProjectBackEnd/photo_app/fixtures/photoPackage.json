@@ -1,0 +1,29 @@
+[
+    {
+    "model": "photo_app.PhotoPackage",
+    "pk": 1,
+    "fields": {
+        "package_name": "Basic",
+        "package_info": "This is the basic package",
+        "package_price": 10.00
+    }
+},
+{
+    "model": "photo_app.PhotoPackage",
+    "pk": 2,
+    "fields": {
+        "package_name": "Standard",
+        "package_info": "This is the standard package",
+        "package_price": 20.00
+    }
+},
+{
+    "model": "photo_app.PhotoPackage",
+    "pk": 3,
+    "fields": {
+        "package_name": "Premium",
+        "package_info": "This is the premium package",
+        "package_price": 30.00
+}
+}
+]

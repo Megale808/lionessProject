@@ -1,0 +1,14 @@
+[
+{
+  "model": "session_app.sessions",
+  "pk": 6,
+  "fields": {
+    "packageID": 1,
+    "sessions": 1,
+    "date_time": "2021-01-01 12:00:00",
+    "session_duration": 30,
+    "price": "0.00",
+    "status": "Pending"
+  }
+}
+]
