@@ -12,12 +12,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='PhotoPackage',
+            name='Chatbot',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('package_name', models.CharField(choices=[('Basic', 'Basic'), ('Standard', 'Standard'), ('Premium', 'Premium')], default='Basic', max_length=50)),
-                ('package_info', models.TextField(default='', null=True)),
-                ('package_price', models.DecimalField(decimal_places=2, default=0.0, max_digits=5)),
+                ('_input', models.TextField()),
+                ('_output', models.TextField(blank=True, null=True)),
             ],
+            options={
+                'db_table': 'chatbot',
+            },
         ),
     ]
