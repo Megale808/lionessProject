@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/v1/users/', include('user_app.urls')),
     path('api/v1/container/', include('session_app.urls')),
     path('api/v1/packages/', include('photo_app.urls')),
-    path('api/v1/chatbot/', include('chatbot.urls'))
+    path('api/v1/chatbot/', include('chatbot.urls')),
+    path('api/v1/noun/', include('api_app.urls'))
 ]
 

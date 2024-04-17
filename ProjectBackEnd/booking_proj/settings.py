@@ -28,6 +28,9 @@ SECRET_KEY = env.get("DJANGO_SECRET_KEY")
 
 OPENAI_KEY = os.getenv("OPENAI_API_KEY")
 
+NOUN_API_KEY = os.getenv("NOUN_API_KEY")
+NOUN_API_SECRET = os.getenv("NOUN_API_SECRET")
+
 
 
 
@@ -58,6 +61,7 @@ INSTALLED_APPS = [
     'session_app',
     'chatbot',
     'corsheaders',
+    'api_app',
     
 ]
 

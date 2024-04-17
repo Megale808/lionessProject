@@ -1,13 +1,19 @@
-import './App.css'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import BasicExample from './components/navBar'
+import NavBar from './components/navBar'
+import './App.css'
 
 function App() {
+  const [user, setUser] = useState(null)
+  console.log(user)
+
+
+  
  
   return (
     <>
-      <BasicExample />
-      <Outlet/>
+      <NavBar user={user}/>
+      <Outlet context={{user, setUser}}/>
     </>
   )
 }

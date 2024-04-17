@@ -27,7 +27,7 @@ class SignUP(APIView):
             user_con.full_clean()
             user_con.save()
             user_pack = PhotoPackage.objects.get(package_name='Basic')
-            user_ses = Sessions.objects.create(sessions = user_con, packageID = user_pack, date_time = '2021-01-01 12:00:00')
+            user_ses = Sessions.objects.create(sessions = user_con, packageID = user_pack, date_time = '2021-01-01 12:00:00', session_duration = 30, status = 'Pending')
             user_ses.save()
             user_con.add_session(user_ses)
             user_con.save()            
@@ -64,13 +64,13 @@ class LogOut(TokenReq, APIView):
     def get(self, request):
         request.user.auth_token.delete()
         logout(request)
-        return Response('Logged out', status=s.HTTP_204_NO_CONTENT)
+        return Response('Logged out', status=s.HTTP_200_NO_CONTENT)
     
 
 class Info(TokenReq, APIView):
     def get(self, request):
         ser_data = ClientSerializer(request.user)
-        return Response({"Username": request.user.first_name, 'info': ser_data.data}, status=s.HTTP_200_OK)
+        return Response({"Username": request.user.email, 'info': ser_data.data}, status=s.HTTP_200_OK)
     
     
     def put(self, request):

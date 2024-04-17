@@ -5,6 +5,9 @@ import HomePage from "./pages/homePage";
 import About from "./pages/aboutPage";
 import SignUp from "./pages/signUpPage";
 import ViewGallery from "./pages/galleryPage";
+import InfoPage from "./components/infoPage";
+import LogIN from "./components/loginPage";
+import LogOut from "./components/logoutPage";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +30,18 @@ const router = createBrowserRouter([
         path: "/sign-up",
         element: <SignUp/>,
       },
-
+      {
+        path: "/info",
+        element: <InfoPage/>,
+      },
+      {
+        path: "/login",
+        element: <LogIN/>,
+      },
+      {
+        path: "/logout",
+        element: <LogOut/>,
+      },
     ],
   },
 ]);

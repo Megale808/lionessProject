@@ -5,32 +5,31 @@ import '../project css /signUPpage.css'
 
 
 
-export default function SignUP() {
+export default function LogIN() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const {setUser} = useOutletContext()
 
-  const handleSignUP = async (e) => {
+  const handleLogIN = async (e) => {
     e.preventDefault()
-    const response = await api.post('users/signup/', {email, password})
-    if (response.status === 201) {
-      console.log('User created', response.data)
+    const response = await api.post('users/login/', {email, password})
+    if (response.status === 200) {
+      console.log('User logged in', response.data)
       const {token} = response.data;
       localStorage.setItem('token', token)
       api.defaults.headers['Authorization'] = `Token ${token}`
-      setUser({email: email, password: password})
+      setUser({email: email})
       navigate('/info')
     }
-    
+
   }
-  
       
 
     return (
-      <div className='sign-container' onSubmit={handleSignUP}>
+      <div className='sign-container' onSubmit={handleLogIN}>
         <div className='sign-header'>
-          <div className="sign-text">Sign Up</div>
+          <div className="sign-text">Log In</div>
           <div className="sign-underline"></div>
         </div> 
         <div className="sign-inputs">
@@ -44,7 +43,8 @@ export default function SignUP() {
           </div>
         </div>  
         <div className="submit-container">
-        <div className="submit" onClick={handleSignUP}>Sign Up</div> 
+        
+        <div className="submit" onClick={handleLogIN}>Login</div>   
         </div>
       </div>
     );
