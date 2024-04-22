@@ -1,18 +1,24 @@
 // router.jsx
 import { createBrowserRouter } from "react-router-dom";
+import { userChecks } from "./utilities";
 import App from "./App";
 import HomePage from "./pages/homePage";
 import About from "./pages/aboutPage";
 import SignUp from "./pages/signUpPage";
 import ViewGallery from "./pages/galleryPage";
-import InfoPage from "./components/infoPage";
-import LogIN from "./components/loginPage";
+import ProfilePage from "./pages/ProfilePage"
+import LogIN from "./pages/loginPage";
 import LogOut from "./components/logoutPage";
+import ChatBot from "./components/chatbot";
+import UserUpdate from "./components/userUpate";
+
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: userChecks,
     children: [
       {
         index: true,
@@ -31,8 +37,8 @@ const router = createBrowserRouter([
         element: <SignUp/>,
       },
       {
-        path: "/info",
-        element: <InfoPage/>,
+        path: "/profile",
+        element: <ProfilePage/>,
       },
       {
         path: "/login",
@@ -41,6 +47,18 @@ const router = createBrowserRouter([
       {
         path: "/logout",
         element: <LogOut/>,
+      },
+      {
+        path: "/chatbot",
+        element: <ChatBot/>,
+      },
+      {
+        path: "/user-update",
+        element: <UserUpdate/>,
+      },
+      {
+        path:"*",
+        element: <h1>404 Not Found</h1>
       },
     ],
   },

@@ -1,59 +1,148 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef} from "react"
 import {api} from '../utilities'
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import UpdateUserContainer from "./updateUserContainer";
+import Overlay from 'react-bootstrap/Overlay';
+import Tooltip from 'react-bootstrap/Tooltip';
+
 
 
 
 
 export default function UserContainer() {
+
+    // Getting the container from the backend
     const [sessions, setSessions] = useState([])
-    const [packages, setPackages] = useState([])
+    
+ 
+    // Offcanvas for updating user profile
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
+
+    // Refreshing the page from the delete button
+    const [render, setRender] = useState(false);
+    const target = useRef(null);
+
+    // Deleting a session API call All or Single
+    const deleteInput = useRef(null)
+    const deleteValue = useRef(null)
+
+    
+
+
+
+   
+    // Refreshing the page from the create button
+    const [refresh, setRefresh] = useState(false)
+
+    
+    
+
+    // Getting the container from the backend
+    const getContainer = async () => {  
+                const response = await api.get('container/')
+                setSessions(response.data.sessions)
+    }
     useEffect(() => {
-        const getContainer = async () => {  
-            const response = await api.get('container/')
-            setSessions(response.data.sessions)
-            console.log(response.data)
-            setPackages(response.data.sessions[0].packageID)
-            console.log(response.data.sessions[0].packageID)
-        }
-        getContainer()
-    }, [])
+            
+            getContainer()
+    }, [render])
 
+    console.log(sessions)
+   
+ 
+    // Creating a new session
+    const createSession = async () => {
+        if (sessions.length < 2){
+            const response = await api.post('container/')
+            setSessions([...sessions, response.data])
+            setRefresh(!refresh)
+            console.log(response.data)
+        }else{
+            console.log("You have reached the maximum amount of sessions")
+        }   
+    }
+    
+    // Deleting a session
+    const handleDeleting = async () => {
+        deleteInput.current.focus();
+        if (deleteInput.current.value === "on"){
+            const response = await api.delete('container/all/')
+            console.log(response.data)
+            console.log("Deleting all sessions")
+        }else{
+            deleteValue.current.focus(); 
+            const response = await api.delete(`container/${deleteValue.current.value}/`)
+            console.log(response.data.status)   
+            console.log("Deleting a single session")     
+        }
+        setRender(!render)    
+    }
+    
+    
+    
 
     return (
-        <>
-            <h3>~ Photo Sessions Details ~</h3>
+        <>  
+            
             <div className="sessions-container">
+                <div className="sessions-session">
                 {sessions.map((session, index) => (
                     <div key={index}>
-                        <h4> {session.status}</h4>
-                        <div className="session-times">Default Session Time: {session.session_duration}
-                         <div>
-                            <input type="checkbox" id="timer" name="30mins" value="30"/>
-                            <label> 30 mintues</label>
-                            <input type="checkbox" id="timer" name="45mins" value="45"/>
-                            <label> 45 mintues</label>
-                            <input type="checkbox" id="timer" name="60mins" value="60"/>
-                            <label> 60 mintues</label>
-                            <input type="checkbox" id="timer" name="120mins" value="120"/>
-                            <label> 120 mintues</label>
-                         </div>
-                        <p>{session.date_time}</p>
-                        <input type="datetime-local" />
-                        <p>$ {session.price}</p>
-                        </div>
+                        <h4>ID: {session['id']}</h4>
+                       <table className="table-container">
+                        <th className="table-headers">Status</th>
+                        <th className="table-headers">Date & Time</th>
+                        <th className="table-headers">Price</th>
+                        <th className="table-headers">Session Duration</th>
+                        <tr>
+                            <td className="table-content">{session.status}</td>
+                            <td className="table-content">{session.date_time}</td>
+                            <td className="table-content"> $ {session.price}</td>
+                            <td className="table-content">{session.session_duration} mintues</td>
+                        </tr>
+                        </table>                       
                     </div>
                 ))}
-            </div>
-            <div className="package-details">
-                <h4>~ Package Details ~</h4>
-                <p className="pack-details">{packages.package_name}</p>
-                <p className="pack-details">{packages.package_info}</p>
-                <p className="pack-details">{packages.package_price}</p>
-                <div className="package-buttons">
-                    <button className="pack-button">ADD</button>
-                    <button className="pack-button">DELETE</button>
                 </div>
+                <div className="session-button-field">
+                <Button variant="primary" onClick={handleShow}> Update</Button>
+                <Button onClick={() => createSession()}> Create</Button>
+                <Button ref={target} onClick={() => setRender(!render)}>Delete</Button>
+                <Overlay target={target.current} show={render} placement="left">
+                    {(props) => (
+                    <Tooltip id="overlay-example1" {...props}>
+                        <div>
+                            <div>
+                                <h4>Warning</h4>
+                                <h4>Would you like to delete all sessions?</h4>
+                                <div>
+                                    <input type="checkbox" name="deleteAll" id="deleteAll" ref={deleteInput}/>
+                                </div>
+                                <Button onClick={() => handleDeleting()}>Yes</Button>
+                                <Button onClick={() => setRender(!render)}>No</Button>
+                            </div>
+                            <div>
+                                <h4></h4>
+                                <label > Which session would you like to delete ?</label>
+                                <input id="delete" type="number" name="delete" ref={deleteValue} />
+                                <Button onClick={handleDeleting}>Delete</Button>
+                            </div>
+                        </div>
+                    </Tooltip>
+                    )}
+                </Overlay>
+                <Offcanvas show={show} onHide={handleClose}>
+                    <Offcanvas.Header closeButton>Update User Profile Info</Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <UpdateUserContainer/>
+                    </Offcanvas.Body>
+                </Offcanvas>
+                </div>
+              
             </div>
         </>
     )

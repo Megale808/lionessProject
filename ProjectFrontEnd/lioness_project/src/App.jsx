@@ -1,11 +1,30 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLoaderData} from 'react-router-dom'
 import NavBar from './components/navBar'
 import './App.css'
+import { api } from './utilities'
+
+
+export const userChecks = async () => {
+  const token = localStorage.getItem("token");
+  if (token){
+    api.defaults.headers.common['Authorization'] = `Token ${token}`
+    const response = await api.get('users/info/')
+      if (response.status === 200) {
+        console.log('User logged in', response.data)
+        return response.data
+    }else {
+    console.log('User not logged in')
+    return null
+    }
+  }else {
+    console.log('User not logged in')
+    return null
+  }
+}
 
 function App() {
-  const [user, setUser] = useState(null)
-  console.log(user)
+  const [user, setUser] = useState(useLoaderData())
 
 
   
@@ -14,6 +33,7 @@ function App() {
     <>
       <NavBar user={user}/>
       <Outlet context={{user, setUser}}/>
+    
     </>
   )
 }

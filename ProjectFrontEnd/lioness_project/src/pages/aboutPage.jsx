@@ -1,10 +1,28 @@
-
+import React, { useEffect, useState } from 'react';
+import { api } from '../utilities';
 
 
 export default function About() {
-    return (
-      <div>
-        <h1>About Page</h1>
-      </div>
-    );
+  const [nounIconUrl, setNounIconUrl] = useState('');
+
+  useEffect(() => {
+    const fetchNounIcon = async () => {
+     const response = await api.get(`noun/${"construction"}`);
+      if (response.status === 200) {
+        console.log(response.data);
+        setNounIconUrl(response.data);
+      }
+    };
+
+
+    fetchNounIcon();
+  }, []);
+
+  return (
+    <div>
+      <h1>About Page</h1>
+      <img src={nounIconUrl} alt="noun icon" />
+      <h5> YOU GUESSED IT ...... Also Under Construction</h5>
+    </div>
+  );
   }

@@ -1,3 +1,16 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+.bg-body-tertiary {
+  background-color: #f0f2f5;
+  height: 18vh;
+}
 
 .me-auto {
   display: flex;
@@ -5,7 +18,7 @@
   align-items: center;
   gap: 40px;
   justify-content: right;
-  /* background-color: yellow;    */
+  padding-right: 10px;
 }
 
 
@@ -14,5 +27,285 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  background-color: yellow;
 }
+
+.Card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: whitesmoke;
+  border-radius: 5px;
+  border: 0.3px solid gray;
+  height: fit-content;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+ 
+}
+
+.user-info-list {
+  
+  flex-direction: column;
+  gap: 20px;
+  background-color: gray;
+  border-radius: 5px;
+  
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  color: white;
+}
+
+button {
+  background-color: #3c009d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+}
+
+button:hover {
+  background-color: #3c009d;
+  color: white;
+}
+
+.CardImage {
+  width: 50%;
+  height: 50%;
+  
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.Card-info{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(0, 0, 0);
+  padding: 10px;
+  width: 93%;
+  color: white;
+  background-color: gray;
+}
+
+.offcanvas {
+  display: flex;
+  flex-direction: column;;
+  gap: 2px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  margin-bottom: 5px;
+  
+}
+
+
+/* .mb-3 {
+  display: flex;
+  background-color: wheat;
+  border-radius: 5px;
+  padding: 10px;
+  color: black;
+} */
+
+.page-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 150px;
+  height: 460px;
+}
+
+.name-band {
+  padding: 10px; 
+}
+
+
+.sessions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  border: 0.3px solid rgb(10, 10, 10);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  width: 500px; 
+  height: 350px;
+  position: sticky;
+}
+
+.session-button-field{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: center;
+}
+
+
+.package-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}
+
+.offcanvas-header {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}
+
+.info-page-title {
+  display: flex;
+  flex-direction: row;
+  background-color:#3c009d;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 30px;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+  justify-content: center;
+  box-shadow: black;
+}
+
+.footer-bot{
+  margin-bottom: 10px;
+  margin-left: 90%;
+  
+}
+
+.footer-create-by{
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  background-color: #3c009d;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+  justify-content: center;
+  box-shadow: black;
+}
+
+#overlay-example{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  border: 0.3px solid gray;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  height: 500px;
+  width: 70%;
+}
+
+#overlay-example1{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  border: 0.3px solid gray;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  
+}
+
+.packages-card{
+  display: flex;
+  flex-direction: column;
+  display: block;
+  gap: 20px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  border: 0.3px solid rgb(8, 8, 8);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+
+
+
+
+.table-container{
+  gap: 20px;
+  background-color: rgba(27, 25, 25, 0.524);
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  border: 0.3px solid rgb(8, 8, 8);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+
+.table-content{
+  gap: 20px;
+  background-color: #3c009d;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}
+
+.table-content-packages{
+  background-color: #3c009d;
+  border-radius: 5px;
+  color: white;
+}
+
+.sessions-session{
+  gap: 10px;
+  background-color: #3c009d;
+  border-radius: 5px;
+  
+}
+
+.photo-package-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 22px;
+  background-color: gray;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  border: 0.3px solid rgb(8, 8, 8);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 350px;
+}
+.packName-parent{
+  text-align: center;
+}
+
+.packName{
+  color: #3c009d;
+  
+}
+
+
+

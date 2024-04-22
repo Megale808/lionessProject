@@ -20,7 +20,7 @@ export default function SignUP() {
       localStorage.setItem('token', token)
       api.defaults.headers['Authorization'] = `Token ${token}`
       setUser({email: email, password: password})
-      navigate('/info')
+      navigate('/profile')
     }
     
   }

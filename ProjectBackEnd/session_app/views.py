@@ -22,19 +22,24 @@ class UserSessionCon(APIView):
     def post(self, request):
         user_con = request.user.container
         new_package = PhotoPackage.objects.get(package_name="Basic")
-        new_session = Sessions.objects.create(sessions = user_con, packageID = new_package, date_time = '2021-01-01 12:00:00', session_duration = 30)
-        if new_session.full_clean():
+        new_session = Sessions(sessions = user_con, packageID = new_package, date_time = '2021-01-01 12:00:00', session_duration = 30)
+        try:
+            new_session.full_clean()
             new_session.save()
             user_con.add_session(new_session)
             user_con.save()
-            return Response("New Session Added", status=HTTP_201_CREATED)
-        return Response("New Session Wasn't created", status=HTTP_400_BAD_REQUEST)
+            new_session = SessionSerializer(new_session)
+            return Response(new_session.data, status=HTTP_201_CREATED)
+        except:
+            return Response("New Session Wasn't created", status=HTTP_400_BAD_REQUEST)
        
     
     def delete(self, request, id):
         if type(id) == int:
-            session = request.user.container.sessions.get(id=request.data.get('id'))
+            print(request.user.container.sessions.get(id=id))
+            session = request.user.container.sessions.get(id=id)
             session.delete()
+           
             return Response("Photo Session was Deleted", status=HTTP_204_NO_CONTENT)
         elif type(id) == str:
             session = request.user.container.sessions.all()

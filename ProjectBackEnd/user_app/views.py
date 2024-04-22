@@ -61,10 +61,10 @@ class TokenReq(TokenAuthentication):
     
     
 class LogOut(TokenReq, APIView):
-    def get(self, request):
+    def post(self, request):
         request.user.auth_token.delete()
         logout(request)
-        return Response('Logged out', status=s.HTTP_200_NO_CONTENT)
+        return Response('Logged out', status=s.HTTP_204_NO_CONTENT)
     
 
 class Info(TokenReq, APIView):

@@ -18,9 +18,9 @@ export default function LogIN() {
       console.log('User logged in', response.data)
       const {token} = response.data;
       localStorage.setItem('token', token)
-      api.defaults.headers['Authorization'] = `Token ${token}`
+      api.defaults.headers.common['Authorization'] = `Token ${token}`
       setUser({email: email})
-      navigate('/info')
+      navigate('/profile')
     }
 
   }

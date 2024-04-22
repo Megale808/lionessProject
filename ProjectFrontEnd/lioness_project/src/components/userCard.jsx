@@ -1,99 +1,102 @@
 import { useEffect, useState } from "react"
 import {api} from '../utilities'
-import { useOutletContext } from "react-router-dom"
+import { NounIcom } from "../utilities";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import UserUpdate from "./userUpate";
 
 
 
 
 export default function UserInfo() {
-    const {setUser} = useOutletContext()
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
+ 
+    const [nounIconUrl, setNounIconUrl] = useState('');
+    const [show, setShow] = useState(false);
     
     
 
+    const handleClose = () => setShow(false);
+    const handleShow = () =>  setShow(true);
     
-
-   const saveUserInfo = async () => {
+    // console.log(show)
    
-        const response = await api.put('users/info/', { first_name: firstName, last_name: lastName, phone: phoneNumber})
-        if (response.status === 200) {
-            console.log('User info updated', response.data)
-            setUser({ firstName: firstName, lastName: lastName, phoneNumber: phoneNumber})
-
-   }
-}
-
     useEffect(() => {
-        const saveInfo = async () => {
-        let userInfo = await getUserInfo()
-        setEmail(userInfo.info['email'])
-        setFirstName(userInfo.info['first_name'])
-        setLastName(userInfo.info['last_name'])
-        setPhoneNumber(userInfo.info['phone'])
-        console.log(userInfo.info)  
+        if (!show) {
+            getUserInfo()
+            // handleUpdate()
         }
-        saveInfo()
-        saveUserInfo()
-    }, [])
-    useEffect(() => {
-        // console.log(email)
-        // console.log(firstName)
-        // console.log(lastName)
-        // console.log(phoneNumber)
-        
-    }, [email, firstName, lastName, phoneNumber])
+    }, [show])
 
-const getUserInfo = async () => {  
-        const Token = localStorage.getItem('token')
-        if (Token) {
-        const response = await api.get('users/info/')
-        if (response.status === 200) {
-            console.log('User info', response.data)
-            return response.data  
-        }else{
-            return null
-        }
-     }
+
+    const getUserInfo = async () => {
+        const response = await api.get('/users/info')
+        setUsername(response.data.info.username.slice(0,9))
+        setEmail(response.data.info.email)
+        setFirstName(response.data.info.first_name)
+        setLastName(response.data.info.last_name)
+     
+
+        // console.log(response.data)
+    
     }
+
+    useEffect(() => {
+
+        getUserInfo()
+    }, [])
+
+   
+        
+      
+        useEffect(() => {
+          const fetchNounIcon = async () => {
+            try {
+              const data = await NounIcom();
+              if (data) {
+                setNounIconUrl(data); // Assuming the URL is available as 'url' in the response data
+              }
+            } catch (error) {
+              console.error("Error fetching noun icon:", error);
+            }
+          };
+
+      
+          fetchNounIcon();
+        }, []);
+
+        
+   
     
     return (
         <>
-        <div>
-            <div className="info-header">
+      
+        <Card className='Card'style={{ width: '18rem', display:"flex", alignContent:'center'}}>
+      <Card.Img className='CardImage'variant="top" src={nounIconUrl} />
+      <Card.Body className="Card-info">
+        <Card.Title>{username}</Card.Title>
+        <Card.Text className="user-info-list">
+            <ul>
+                <li>First Name: {firstName}</li>
+                <li>Last Name: {lastName}</li>
+                <li>Email: {email}</li>
                 
-        </div>
-           <div>
-                <div className="info-upade-header">
-                     <div className="info-text">
-                        <h2>~ User Info ~</h2>
-                     </div>
-                     <div className="info-underline"></div>
-                </div>
-                <div className="info-container">
-                     <div className="info-input">
-                          <div className="info-label">Email</div>
-                          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                     </div>
-                     <div className="info-input">
-                          <div className="info-label">First Name</div>
-                          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
-                     </div>
-                     <div className="info-input">
-                          <div className="info-label">Last Name</div>
-                          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-                     </div>
-                     <div className="info-input">
-                          <div className="info-label">Phone Number (optional)</div>
-                          <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
-                     </div>
-                </div>
-                <div className="info-button" onClick={() => setUser({ firstName: firstName, lastName: lastName, phoneNumber: phoneNumber})}>Save</div>
-           </div>
-        </div>
-           
-        </>
-    )
+            </ul>
+        </Card.Text>
+       <Button variant="primary" onClick={handleShow}>Update Details</Button>
+      </Card.Body>
+    </Card>
+    
+       <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas.Header closeButton>Update User Profile Info</Offcanvas.Header>
+        <Offcanvas.Body>
+            <UserUpdate />
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
+    );
 }
