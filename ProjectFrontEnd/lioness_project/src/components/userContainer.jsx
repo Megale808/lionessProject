@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef} from "react"
 import {api} from '../utilities'
 import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
 import UpdateUserContainer from "./updateUserContainer";
 import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -18,8 +17,6 @@ export default function UserContainer() {
  
     // Offcanvas for updating user profile
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
 
     // Refreshing the page from the delete button
@@ -66,20 +63,23 @@ export default function UserContainer() {
         }   
     }
     
-    // Deleting a session
-    const handleDeleting = async () => {
+    // Deleting All session
+    const handleAllDeleting = async () => {
         deleteInput.current.focus();
         if (deleteInput.current.value === "on"){
             const response = await api.delete('container/all/')
             console.log(response.data)
-            console.log("Deleting all sessions")
-        }else{
-            deleteValue.current.focus(); 
-            const response = await api.delete(`container/${deleteValue.current.value}/`)
-            console.log(response.data.status)   
-            console.log("Deleting a single session")     
+            console.log("Deleting all sessions") 
         }
         setRender(!render)    
+    }
+
+    // Deleting a single session
+    const handleDeleting = async () => {
+        deleteValue.current.focus(); 
+        const response = await api.delete(`container/${deleteValue.current.value}/`)
+        console.log(response.data.status)
+        setRender(!render)
     }
     
     
@@ -109,7 +109,6 @@ export default function UserContainer() {
                 ))}
                 </div>
                 <div className="session-button-field">
-                <Button variant="primary" onClick={handleShow}> Update</Button>
                 <Button onClick={() => createSession()}> Create</Button>
                 <Button ref={target} onClick={() => setRender(!render)}>Delete</Button>
                 <Overlay target={target.current} show={render} placement="left">
@@ -122,7 +121,7 @@ export default function UserContainer() {
                                 <div>
                                     <input type="checkbox" name="deleteAll" id="deleteAll" ref={deleteInput}/>
                                 </div>
-                                <Button onClick={() => handleDeleting()}>Yes</Button>
+                                <Button onClick={() => handleAllDeleting()}>Yes</Button>
                                 <Button onClick={() => setRender(!render)}>No</Button>
                             </div>
                             <div>
@@ -135,15 +134,18 @@ export default function UserContainer() {
                     </Tooltip>
                     )}
                 </Overlay>
-                <Offcanvas show={show} onHide={handleClose}>
-                    <Offcanvas.Header closeButton>Update User Profile Info</Offcanvas.Header>
-                    <Offcanvas.Body>
-                        <UpdateUserContainer/>
-                    </Offcanvas.Body>
-                </Offcanvas>
+                <Button ref={target} onClick={() => setShow(!show)}> Click me! </Button>
+                <Overlay target={target.current} show={show} placement="top">
+                    {(props) => (
+                        <Tooltip id="overlay-example" {...props}>
+                            <UpdateUserContainer/>
+                        </Tooltip>
+                    )}
+                </Overlay>
                 </div>
               
             </div>
+            
         </>
     )
 }

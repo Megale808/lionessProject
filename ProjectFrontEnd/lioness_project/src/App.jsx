@@ -3,6 +3,7 @@ import { Outlet, useLoaderData} from 'react-router-dom'
 import NavBar from './components/navBar'
 import './App.css'
 import { api } from './utilities'
+import Footer from './components/footer'
 
 
 export const userChecks = async () => {
@@ -33,7 +34,7 @@ function App() {
     <>
       <NavBar user={user}/>
       <Outlet context={{user, setUser}}/>
-    
+      <Footer/>
     </>
   )
 }

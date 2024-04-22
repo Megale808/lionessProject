@@ -57,9 +57,6 @@ export default function ProfilePage() {
                         )}
                     </Overlay>
                 </div>
-                <div className="footer-create-by">
-                    <p>Created by Lioness Team</p>
-                </div>
             </footer>
         </div>
         </>

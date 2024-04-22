@@ -29,4 +29,9 @@ class Sessions(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     status = models.CharField(max_length=50, choices=STATUS, default='Pending')
     
-   
+    # def get_status(self):
+    #     return self.status
+    
+    # def change_status(self, new_status):
+    #     self.status = new_status
+    #     self.save()
