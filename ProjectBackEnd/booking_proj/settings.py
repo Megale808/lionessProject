@@ -59,10 +59,7 @@ INSTALLED_APPS = [
     'user_app',
     'photo_app',
     'session_app',
-    'chatbot',
-    'corsheaders',
-    'api_app',
-    
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
